@@ -2,7 +2,6 @@ package com.example.recipesapp.network
 
 import com.example.recipesapp.model.RecipesList
 import com.example.recipesapp.utils.Constants.API_KEY
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
