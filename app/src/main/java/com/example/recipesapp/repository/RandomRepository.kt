@@ -1,16 +1,16 @@
 package com.example.recipesapp.repository
 
-
 import com.example.recipesapp.data.DataOrException
 import com.example.recipesapp.model.findByIngridientsModel.RecipesList
-import com.example.recipesapp.network.FindByIngredientsAPI
+import com.example.recipesapp.model.randomModel.RandomRecipes
+import com.example.recipesapp.network.RandomAPI
 import javax.inject.Inject
 
-class FindByIngredientsRepository @Inject constructor(private val api: FindByIngredientsAPI) {
+class RandomRepository @Inject constructor(private val api: RandomAPI) {
 
-    suspend fun getRecipes(ingredients: String): DataOrException<RecipesList, Boolean, Exception> {
+    suspend fun getRandomRecipes(): DataOrException<RandomRecipes, Boolean, Exception> {
         val response = try {
-            api.findByIngredients(ingredients = ingredients)
+            api.findByIngredients()
         } catch (e: Exception) {
             return DataOrException(e = e)
         }

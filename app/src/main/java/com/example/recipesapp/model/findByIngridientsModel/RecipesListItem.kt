@@ -1,4 +1,4 @@
-package com.example.recipesapp.model
+package com.example.recipesapp.model.findByIngridientsModel
 
 data class RecipesListItem(
     val id: Int,

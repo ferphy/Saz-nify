@@ -1,8 +1,9 @@
-package com.example.recipesapp.model
+package com.example.recipesapp.model.findByIngridientsModel
 
-data class UsedIngredient(
+data class MissedIngredient(
     val aisle: String,
     val amount: Double,
+    val extendedName: String,
     val id: Int,
     val image: String,
     val meta: List<String>,

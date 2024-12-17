@@ -1,4 +1,4 @@
-package com.example.recipesapp.screens
+package com.example.recipesapp.screens.search
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,18 +10,19 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.recipesapp.data.DataOrException
-import com.example.recipesapp.model.RecipesList
+import com.example.recipesapp.model.findByIngridientsModel.RecipesList
 
 @Composable
-fun MainScreen(
+fun SearchRecipesScreen(
     ingredients: String = "apples,+flour,+sugar",
     modifier: Modifier = Modifier,
-    mainViewModel: MainViewModel = hiltViewModel()
+    searchRecipesViewModel : SearchRecipesViewModel = hiltViewModel()
+
     ){
 
     val recipesData = produceState<DataOrException<RecipesList, Boolean, Exception>>(
         initialValue = DataOrException(loading = true)) {
-        value = mainViewModel.getRecipes(ingredients)
+        value = searchRecipesViewModel.getRecipes(ingredients)
     }.value
 
     Surface(modifier = modifier.fillMaxSize()) {
@@ -30,11 +31,11 @@ fun MainScreen(
                 CircularProgressIndicator(modifier = Modifier.fillMaxSize())
             }
             recipesData.data != null -> {
-                Log.d("MainScreen", "MainScreen: ${recipesData.data}")
+                Log.d(">SearchScreen", "SearchScreen: ${recipesData.data}")
                 Text(text = "Recipes Loaded!")
             }
             recipesData.e != null -> {
-                Log.e("MainScreen", "Error loading recipes: ${recipesData.e}")
+                Log.e("SearchScreen", "Error loading recipes: ${recipesData.e}")
                 Text(text = "Error loading recipes")
             }
         }

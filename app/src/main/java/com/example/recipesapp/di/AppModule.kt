@@ -1,6 +1,7 @@
 package com.example.recipesapp.di
 
 import com.example.recipesapp.network.FindByIngredientsAPI
+import com.example.recipesapp.network.RandomAPI
 import com.example.recipesapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,15 @@ class AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(FindByIngredientsAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRandomRecipesRepository(): RandomAPI {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(RandomAPI::class.java)
     }
 }
