@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.example.recipesapp.components.RecipeCard
 import com.example.recipesapp.data.DataOrException
 import com.example.recipesapp.model.findByIngridientsModel.RecipesList
 import com.example.recipesapp.model.randomModel.RandomRecipes
@@ -45,7 +47,9 @@ fun MainScreen(
         value = mainViewModel.getRandomRecipes()
     }.value
 
-    Surface(modifier = modifier.fillMaxSize()) {
+    Surface(modifier = modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+    ) {
         when {
             recipesData.loading == true -> {
                 CircularProgressIndicator()
@@ -57,22 +61,15 @@ fun MainScreen(
                     modifier = Modifier.fillMaxSize(), // Modificador para ajustar tamaño
                     verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
                     contentPadding = PaddingValues(16.dp) // Espaciado en los bordes
+
                 ) {
                     items(recipesData.data!!.recipes) { recipe ->
-                        Text(text = recipe.title)
-                        Spacer(modifier = Modifier.size(10.dp))
-                        AsyncImage(
-                            model = recipe.image, // URL de la imagen
-                            contentDescription = "Sample Image",
-                            modifier = Modifier
-                                .size(200.dp)
-                                .clip(RoundedCornerShape(8.dp)), // Opcional: redondear bordes
-                            contentScale = ContentScale.Crop // Ajusta cómo se muestra la imagen
+                        parsedHtml = HtmlCompat.fromHtml(recipe.summary, HtmlCompat.FROM_HTML_MODE_COMPACT)
+                        RecipeCard(
+                            title = recipe.title,
+                            description = parsedHtml.toString(),
+                            image = recipe.image
                         )
-                        Spacer(modifier = Modifier.size(10.dp))
-                        parsedHtml = HtmlCompat.fromHtml(recipe.instructions, HtmlCompat.FROM_HTML_MODE_COMPACT)
-                        Text(text = parsedHtml.toString())
-                        Spacer(modifier = Modifier.size(10.dp))
                     }
                 }
             }
