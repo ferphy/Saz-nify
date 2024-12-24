@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.recipesapp.data.DataOrException
 import com.example.recipesapp.model.findByIngridientsModel.RecipesList
 
@@ -16,9 +17,10 @@ import com.example.recipesapp.model.findByIngridientsModel.RecipesList
 fun SearchRecipesScreen(
     ingredients: String = "apples,+flour,+sugar",
     modifier: Modifier = Modifier,
-    searchRecipesViewModel : SearchRecipesViewModel = hiltViewModel()
+    searchRecipesViewModel: SearchRecipesViewModel = hiltViewModel(),
+    navController: NavHostController
 
-    ){
+){
 
     val recipesData = produceState<DataOrException<RecipesList, Boolean, Exception>>(
         initialValue = DataOrException(loading = true)) {

@@ -20,8 +20,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.recipesapp.widgets.RecipeCard
-import com.example.recipesapp.widgets.SearchTopAppBar
 import com.example.recipesapp.data.DataOrException
 import com.example.recipesapp.model.randomModel.RandomRecipes
 import com.example.recipesapp.widgets.MainTopAppBar
@@ -29,7 +29,8 @@ import com.example.recipesapp.widgets.MainTopAppBar
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    mainViewModel: MainViewModel = hiltViewModel()
+    mainViewModel: MainViewModel = hiltViewModel(),
+    navController: NavHostController
 ){
     //Context of the app
     val context = LocalContext.current
