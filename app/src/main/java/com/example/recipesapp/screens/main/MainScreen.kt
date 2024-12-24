@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -47,7 +48,7 @@ fun MainScreen(
     Surface(modifier = modifier.fillMaxSize()) {
         when {
             recipesData.loading == true -> {
-                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+                CircularProgressIndicator()
             }
             recipesData.data != null -> {
                 Log.d("MainScreen", "MainScreen: ${recipesData.data!!.recipes[1].instructions}")
