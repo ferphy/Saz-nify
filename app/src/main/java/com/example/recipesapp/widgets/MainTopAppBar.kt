@@ -11,18 +11,19 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.recipesapp.R
+import com.example.recipesapp.navigation.AppScreens
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTopAppBar(){
+fun MainTopAppBar(navController: NavHostController) {
     CenterAlignedTopAppBar(
         title = { Image(
             modifier = Modifier.size(48.dp),
@@ -36,7 +37,9 @@ fun MainTopAppBar(){
             }
         },
         actions = {
-            IconButton(onClick = { /* Handle search click */ }) {
+            IconButton(onClick = { /* Handle search click */
+                navController.navigate(AppScreens.SearchRecipesScreen.name)
+            }) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
             }
         }

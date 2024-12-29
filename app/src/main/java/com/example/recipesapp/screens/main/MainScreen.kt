@@ -3,9 +3,11 @@ package com.example.recipesapp.screens.main
 import android.text.Spanned
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -15,8 +17,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,11 +31,10 @@ import com.example.recipesapp.widgets.MainTopAppBar
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    mainViewModel: MainViewModel = hiltViewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    mainViewModel: MainViewModel
 ){
-    //Context of the app
-    val context = LocalContext.current
+
     //HTML format to readable text
     var parsedHtml: Spanned
 
@@ -42,10 +43,13 @@ fun MainScreen(
     ) {
         value = mainViewModel.getRandomRecipes()
     }.value
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            MainTopAppBar()
+            MainTopAppBar(
+                navController = navController
+            )
         }
     ) { innerPadding ->
 
@@ -57,17 +61,20 @@ fun MainScreen(
         ) {
             when {
                 recipesData.loading == true -> {
-                    CircularProgressIndicator()
+                    Column (
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center){
+                        CircularProgressIndicator(modifier = Modifier.size(50.dp))
+                    }
+
                 }
 
                 recipesData.data != null -> {
                     Log.d("MainScreen", "MainScreen: ${recipesData.data!!.recipes[1].instructions}")
-
                     LazyColumn(
-                        modifier = Modifier.fillMaxSize(), // Modificador para ajustar tamaño
-                        verticalArrangement = Arrangement.spacedBy(8.dp), // Espacio entre elementos
-                        contentPadding = PaddingValues(16.dp) // Espaciado en los bordes
-
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(16.dp)
                     ) {
                         items(recipesData.data!!.recipes) { recipe ->
                             parsedHtml = HtmlCompat.fromHtml(

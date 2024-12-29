@@ -86,4 +86,8 @@ dependencies {
     kapt(libs.hilt.compiler)
     // Hilt para Jetpack Compose (opcional)
     implementation(libs.hilt.navigation.compose)
+    //navegation
+    implementation (libs.ui)
+    implementation (libs.androidx.material)
+    implementation (libs.androidx.navigation.compose)
 }
