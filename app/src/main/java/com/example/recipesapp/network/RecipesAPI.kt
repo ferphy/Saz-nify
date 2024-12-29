@@ -30,7 +30,7 @@ interface AutocompleteAPI {
     @GET("autocomplete")
     suspend fun getAutocomplete(
         @Query("query") query: String,
-        @Query("number") number: Int = 10, // Número máximo de resultados
+        @Query("number") number: Int = 20, // Número máximo de resultados
         @Query("apiKey") apiKey: String = API_KEY
     ): AutocompleteList
 }

@@ -1,10 +1,14 @@
 package com.example.recipesapp.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.recipesapp.screens.details.DetailsRecipeScreen
 import com.example.recipesapp.screens.main.MainScreen
 import com.example.recipesapp.screens.main.MainViewModel
 import com.example.recipesapp.screens.search.SearchRecipesScreen
@@ -30,9 +34,18 @@ fun AppNavigation (){
                 mainViewModel = mainViewModel
             )
         }
-
         composable(AppScreens.SearchRecipesScreen.name) {
             SearchRecipesScreen(navController = navController)
+        }
+        val route = AppScreens.DetailsRecipeScreen.name
+        composable("$route/{recipeId}",
+            arguments = listOf(navArgument("recipeId") {
+                type = NavType.StringType
+            })){ NavBack ->
+            NavBack.arguments?.getString("recipeId")?.let { recipeId ->
+                Log.d("AppNavigation", "Recipe ID: $recipeId")
+                DetailsRecipeScreen(navController = navController, recipeId = recipeId)
+            }
         }
     }
 
