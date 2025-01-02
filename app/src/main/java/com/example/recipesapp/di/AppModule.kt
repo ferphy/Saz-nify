@@ -1,6 +1,8 @@
 package com.example.recipesapp.di
 
+import com.example.recipesapp.model.finByID.RecipeByID
 import com.example.recipesapp.network.AutocompleteAPI
+import com.example.recipesapp.network.FindByIdAPI
 import com.example.recipesapp.network.FindByIngredientsAPI
 import com.example.recipesapp.network.RandomAPI
 import com.example.recipesapp.utils.Constants.BASE_URL
@@ -44,5 +46,15 @@ class AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AutocompleteAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFindByIdAPI(): FindByIdAPI {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(FindByIdAPI::class.java)
     }
 }

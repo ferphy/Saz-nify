@@ -1,10 +1,12 @@
 package com.example.recipesapp.network
 
 import com.example.recipesapp.model.autocompleteModel.AutocompleteList
+import com.example.recipesapp.model.finByID.RecipeByID
 import com.example.recipesapp.model.findByIngridientsModel.RecipesList
 import com.example.recipesapp.model.randomModel.RandomRecipes
 import com.example.recipesapp.utils.Constants.API_KEY
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FindByIngredientsAPI {
@@ -34,4 +36,12 @@ interface AutocompleteAPI {
         @Query("apiKey") apiKey: String = API_KEY
     ): AutocompleteList
 }
+interface FindByIdAPI {
+    @GET("{id}/information")
+    suspend fun getAutocomplete(
+        @Path("id") recipeId: String,
+        @Query("apiKey") apiKey: String = API_KEY
+    ): RecipeByID
+}
+
 
